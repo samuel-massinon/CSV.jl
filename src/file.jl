@@ -208,8 +208,8 @@ function File(source::ValidSources;
     strict::Bool=false,
     silencewarnings::Bool=false,
     maxwarnings::Int=DEFAULT_MAX_WARNINGS,
-    debug::Bool=false,
-    parsingdebug::Bool=false,
+    debug::Bool=true,
+    parsingdebug::Bool=true,
     validate::Bool=true,
     )
     # header=1;normalizenames=false;datarow=-1;skipto=-1;footerskip=0;transpose=false;comment=nothing;ignoreemptyrows=true;ignoreemptylines=nothing;
@@ -437,7 +437,7 @@ function multithreadpostparse(ctx, ntasks, pertaskcolumns, rows, finalrows, j, c
         # col.column is a PooledArray
     elseif col.type === Int64
         # we need to special-case Int here because while parsing, a default Int64 sentinel value is chosen to
-        # represent missing; if any chunk bumped into that sentinel value while parsing, then it cycled to a 
+        # represent missing; if any chunk bumped into that sentinel value while parsing, then it cycled to a
         # new sentinel value; this step ensures that each chunk has the same encoded sentinel value
         # passing force=false means it will first check if all chunks already have the same sentinel and return
         # immediately if so, which will be the case most often
